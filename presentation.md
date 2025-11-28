@@ -2,6 +2,45 @@
 Este repositório contém uma aplicação Strapi utilizada para a entrega do trabalho do módulo de DevOps. O objetivo do projeto foi implementar testes end-to-end com Playwright, configurar pipelines de CI utilizando GitHub Actions para executar esses testes em Pull Requests, criar workflows para build e push de imagem Docker e, por fim, automatizar o deploy via Terraform para um serviço em nuvem.
 
 ## O que foi implementado
+## Workflows de CI/CD do Projeto
+
+O repositório possui três workflows principais que automatizam validações, testes, build de imagem Docker e deploy da aplicação, seguindo boas práticas de DevOps.
+
+### 1. PR Check – Tests
+Executado em todo PR aberto para `master`.  
+Responsável por validar o código antes do merge:
+
+- Checkout do código e instalação de dependências.
+- Configuração do Node.js e navegadores do Playwright.
+- Build do Strapi para validar compilação.
+- Execução dos testes end-to-end.
+- Fallback automático se houver falhas.
+
+### 2. PR Conditional Failure
+Também executado em PRs para `master`.  
+Aplica uma regra de nomenclatura da branch:
+
+- Se o nome tiver `force-fail`, o workflow falha propositalmente.
+- Caso contrário, passa.
+
+Serve como exemplo de implementação de regras de controle em pipelines.
+
+### 3. Deploy (Docker + Terraform)
+Executado em push para a branch `master`, composto por duas fases:
+
+#### Fase 1 — Build e Push Docker
+- Build da imagem Docker do Strapi.
+- Publicação no Docker Hub com:
+  - Tag única baseada no SHA
+  - Tag `latest`
+- Exportação da tag para a fase seguinte.
+
+#### Fase 2 — Deploy com Terraform
+- Autenticação na Azure.
+- Execução de `terraform init` e `terraform apply` no diretório `terraform/`.
+- Deploy utilizando o repositório e a tag da imagem gerada.
+
+
 * **Testes end-to-end com Playwright:**
   A pasta `tests/` contém testes que exercitam o painel administrativo do Strapi. Em destaque:
 
