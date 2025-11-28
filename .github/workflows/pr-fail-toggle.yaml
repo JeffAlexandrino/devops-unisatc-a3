@@ -1,0 +1,20 @@
+name: PR Conditional Failure
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  fail-if-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR branch name and optionally fail
+        run: |
+          echo "PR head ref: ${{ github.head_ref }}"
+          if [[ "${{ github.head_ref }}" == *"force-fail"* ]]; then
+            echo "Forcing failure because branch name contains 'force-fail'"
+            exit 1
+          else
+            echo "No failure triggered"
+          fi
+          
