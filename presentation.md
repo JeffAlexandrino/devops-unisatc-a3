@@ -13,9 +13,9 @@ Este repositório contém uma aplicação Strapi utilizada para a entrega do tra
 
 * **Pull Requests e GitHub Actions:**
 Para cada pull request foi criada uma branch e feito merge para a branch master.
-![branches](img/branches.png)
+![branches](imgs/branches.png)
 
-![actions](img/actions.png)
+![actions](imgs/actions.png)
 
 ### Pull Request com falha (Failing Checks)
 O primeiro Pull Request foi aberto contendo alterações propositalmente inválidas. Ao ser criado, dois workflows foram executados automaticamente pelo GitHub Actions:
@@ -29,7 +29,7 @@ Ambos os workflows retornaram falha, resultando no estado:
 
 Mesmo sem conflitos com a branch principal, o PR não foi liberado para merge, evidenciando o papel da pipeline em impedir a integração de código defeituoso.
 
-![prfail](img/pr2.png)
+![prfail](imgs/pr2.jpg)
 
 ### Pull Request válido (Successful Checks)
 Um segundo Pull Request foi criado com as correções necessárias. Os mesmos workflows foram executados novamente:
@@ -43,13 +43,13 @@ O estado final foi:
 
 Com isso, o merge para a branch principal foi liberado, demonstrando a importância das validações automáticas na garantia de estabilidade e integridade do código.
 
-![prsuccess](img/pr1.png)
+![prsuccess](imgs/pr1.jpg)
 
 ## O que não foi concluído
 * **Build e Push de imagem Docker:**
   A configuração da action responsável pelo build e push da imagem Docker não foi concluída e foi removida do repositório. O projeto inclui um `Dockerfile` funcional para construção da imagem localmente.
 
-![dockerfail](img/dockerfail.png)
+![dockerfail](imgs/dockerfail.png)
 
 * **Deploy via Terraform / Azure:**
   O diretório `terraform/` contém um `main.tf` configurado para Azure Container Instances (ACI). No entanto, a action que executaria `terraform init` e `terraform apply` não está presente na versão atual.
